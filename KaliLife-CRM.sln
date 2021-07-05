@@ -5,6 +5,14 @@ VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaliLife-CRM", "KaliLife-CRM\KaliLife-CRM.csproj", "{8A904C17-6A4F-4B7F-ACF8-97CFA646B392}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaliLife-CRM.Biz", "KaliLife-CRM.Biz\KaliLife-CRM.Biz.csproj", "{D57F9C85-9A34-44CE-991B-65D56D5F881C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaliLife-CRM.Models", "KaliLife-CRM.Models\KaliLife-CRM.Models.csproj", "{093278DE-E74F-46A5-89CE-9D24EA41CA78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaliLife-CRM.Repo", "KaliLife-CRM.Repo\KaliLife-CRM.Repo.csproj", "{BBB73020-7950-4D23-8B86-1F121A115964}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaliLife-CRM.Util", "KaliLife-CRM.Util\KaliLife-CRM.Util.csproj", "{86613A9C-0EF3-4EB8-B722-0E2D5A8E55A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{8A904C17-6A4F-4B7F-ACF8-97CFA646B392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A904C17-6A4F-4B7F-ACF8-97CFA646B392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A904C17-6A4F-4B7F-ACF8-97CFA646B392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57F9C85-9A34-44CE-991B-65D56D5F881C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57F9C85-9A34-44CE-991B-65D56D5F881C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57F9C85-9A34-44CE-991B-65D56D5F881C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57F9C85-9A34-44CE-991B-65D56D5F881C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{093278DE-E74F-46A5-89CE-9D24EA41CA78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{093278DE-E74F-46A5-89CE-9D24EA41CA78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{093278DE-E74F-46A5-89CE-9D24EA41CA78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{093278DE-E74F-46A5-89CE-9D24EA41CA78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBB73020-7950-4D23-8B86-1F121A115964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBB73020-7950-4D23-8B86-1F121A115964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBB73020-7950-4D23-8B86-1F121A115964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBB73020-7950-4D23-8B86-1F121A115964}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86613A9C-0EF3-4EB8-B722-0E2D5A8E55A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86613A9C-0EF3-4EB8-B722-0E2D5A8E55A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86613A9C-0EF3-4EB8-B722-0E2D5A8E55A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86613A9C-0EF3-4EB8-B722-0E2D5A8E55A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
