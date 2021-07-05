@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>KaliLife_CRM.Biz</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KaliLife-CRM.Models\KaliLife-CRM.Models.csproj" />
+  </ItemGroup>
+</Project>
