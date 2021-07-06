@@ -236,6 +236,9 @@ export class AgentOrderClient implements IAgentOrderClient {
 
 export interface IAgentProfileClient {
     get(): Promise<AgentProfileDto>;
+    update(body: AgentProfileDto): Promise<AgentProfileDto>;
+    updateAddress(body: AddressDto): Promise<AgentProfileDto>;
+    updateNotification(type: string | null, value: boolean): Promise<AgentProfileDto>;
 }
 
 export class AgentProfileClient implements IAgentProfileClient {
@@ -265,6 +268,124 @@ export class AgentProfileClient implements IAgentProfileClient {
     }
 
     protected processGet(response: Response): Promise<AgentProfileDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <AgentProfileDto>jsonParse(_responseText, this.jsonParseReviver);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<AgentProfileDto>(<any>null);
+    }
+
+    update(body: AgentProfileDto): Promise<AgentProfileDto> {
+        let url_ = this.baseUrl + "/api/AgentProfile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdate(_response);
+        });
+    }
+
+    protected processUpdate(response: Response): Promise<AgentProfileDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <AgentProfileDto>jsonParse(_responseText, this.jsonParseReviver);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<AgentProfileDto>(<any>null);
+    }
+
+    updateAddress(body: AddressDto): Promise<AgentProfileDto> {
+        let url_ = this.baseUrl + "/api/AgentProfile/UpdateAddress";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateAddress(_response);
+        });
+    }
+
+    protected processUpdateAddress(response: Response): Promise<AgentProfileDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <AgentProfileDto>jsonParse(_responseText, this.jsonParseReviver);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<AgentProfileDto>(<any>null);
+    }
+
+    updateNotification(type: string | null, value: boolean): Promise<AgentProfileDto> {
+        let url_ = this.baseUrl + "/api/AgentProfile/UpdateNotification?";
+        if (type === undefined)
+            throw new Error("The parameter 'type' must be defined.");
+        else if(type !== null)
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
+        if (value === undefined || value === null)
+            throw new Error("The parameter 'value' must be defined and cannot be null.");
+        else
+            url_ += "value=" + encodeURIComponent("" + value) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateNotification(_response);
+        });
+    }
+
+    protected processUpdateNotification(response: Response): Promise<AgentProfileDto> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         let _mappings: { source: any, target: any }[] = [];

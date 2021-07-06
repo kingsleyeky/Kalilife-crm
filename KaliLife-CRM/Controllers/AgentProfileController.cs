@@ -23,7 +23,32 @@ namespace KaliLife_CRM.Controllers
             };
             return ret;
         }
-
-
+        [HttpPost]
+        public AgentProfileDto Update([FromBody] AgentProfileDto body)
+        {
+            var ret = new AgentProfileDto()
+            {
+                FirstName = ""
+            };
+            return ret;
+        }
+        [HttpPost("UpdateAddress")]
+        public AgentProfileDto UpdateAddress([FromBody] AddressDto body)
+        {
+            var ret = new AgentProfileDto()
+            {
+                FirstName = ""
+            };
+            return ret;
+        }
+        [HttpPost("UpdateNotification")]
+        public AgentProfileDto UpdateNotification([FromQuery] string type, [FromQuery] bool value)
+        {
+            var ret = new AgentProfileDto()
+            {
+                FirstName = ""
+            };
+            return ret;
+        }
     }
 }
