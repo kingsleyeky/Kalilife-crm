@@ -6,8 +6,9 @@ namespace KaliLife_CRM.Dto
     {
         public string State { get; set; }
         public string County { get; set; }
-        public string LeadType { get; set; }
-        public LeadLevel LeadLevel { get; set; }
+        public string ProductType { get; set; }
+        public LeadType LeadType { get; set; }
         public int Count { get; set; }
+        public double Price { get; set; }
     }
 }

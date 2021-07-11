@@ -8,7 +8,7 @@
 // ReSharper disable InconsistentNaming
 
 export interface IAgentLeadsClient {
-    get(sorting: string | null, skipCount: number, maxResultCount: number, requestCount: boolean): Promise<PagedResultDtoOfAgentLeadDto>;
+    get(sorting: string | null, offset: number, maxResultCount: number, requestCount: boolean): Promise<PagedResultDtoOfAgentLeadDto>;
 }
 
 export class AgentLeadsClient implements IAgentLeadsClient {
@@ -21,16 +21,16 @@ export class AgentLeadsClient implements IAgentLeadsClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    get(sorting: string | null, skipCount: number, maxResultCount: number, requestCount: boolean): Promise<PagedResultDtoOfAgentLeadDto> {
+    get(sorting: string | null, offset: number, maxResultCount: number, requestCount: boolean): Promise<PagedResultDtoOfAgentLeadDto> {
         let url_ = this.baseUrl + "/api/AgentLeads?";
         if (sorting === undefined)
             throw new Error("The parameter 'sorting' must be defined.");
         else if(sorting !== null)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === undefined || skipCount === null)
-            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        if (offset === undefined || offset === null)
+            throw new Error("The parameter 'offset' must be defined and cannot be null.");
         else
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+            url_ += "Offset=" + encodeURIComponent("" + offset) + "&";
         if (maxResultCount === undefined || maxResultCount === null)
             throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
         else
@@ -74,8 +74,8 @@ export class AgentLeadsClient implements IAgentLeadsClient {
 
 export interface IAgentOrderClient {
     currentOrder(): Promise<AgentOrderDto>;
-    addItem(line: AgentOrderLineDto): Promise<ActionResultDtoOfAgentOrderLineDto>;
-    deleteItem(line: AgentOrderLineDto): Promise<AgentOrderLineDto>;
+    addItem(line: AgentAddOrderLineDto): Promise<ActionResultDtoOfAgentOrderLineDto>;
+    deleteItem(lineId: string): Promise<string>;
     processCurrentOrder(): Promise<ActionResultDtoOfAgentOrderDto>;
 }
 
@@ -123,7 +123,7 @@ export class AgentOrderClient implements IAgentOrderClient {
         return Promise.resolve<AgentOrderDto>(<any>null);
     }
 
-    addItem(line: AgentOrderLineDto): Promise<ActionResultDtoOfAgentOrderLineDto> {
+    addItem(line: AgentAddOrderLineDto): Promise<ActionResultDtoOfAgentOrderLineDto> {
         let url_ = this.baseUrl + "/api/AgentOrder/AddItem";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -161,17 +161,17 @@ export class AgentOrderClient implements IAgentOrderClient {
         return Promise.resolve<ActionResultDtoOfAgentOrderLineDto>(<any>null);
     }
 
-    deleteItem(line: AgentOrderLineDto): Promise<AgentOrderLineDto> {
-        let url_ = this.baseUrl + "/api/AgentOrder/DeleteItem";
+    deleteItem(lineId: string): Promise<string> {
+        let url_ = this.baseUrl + "/api/AgentOrder/DeleteItem?";
+        if (lineId === undefined || lineId === null)
+            throw new Error("The parameter 'lineId' must be defined and cannot be null.");
+        else
+            url_ += "LineId=" + encodeURIComponent("" + lineId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(line);
-
         let options_ = <RequestInit>{
-            body: content_,
             method: "DELETE",
             headers: {
-                "Content-Type": "application/json",
                 "Accept": "application/json"
             }
         };
@@ -181,14 +181,13 @@ export class AgentOrderClient implements IAgentOrderClient {
         });
     }
 
-    protected processDeleteItem(response: Response): Promise<AgentOrderLineDto> {
+    protected processDeleteItem(response: Response): Promise<string> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : <AgentOrderLineDto>jsonParse(_responseText, this.jsonParseReviver);
+            result200 = _responseText === "" ? null : <string>jsonParse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -196,7 +195,7 @@ export class AgentOrderClient implements IAgentOrderClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<AgentOrderLineDto>(<any>null);
+        return Promise.resolve<string>(<any>null);
     }
 
     processCurrentOrder(): Promise<ActionResultDtoOfAgentOrderDto> {
@@ -405,7 +404,7 @@ export class AgentProfileClient implements IAgentProfileClient {
 }
 
 export interface IAgentSearchLeadClient {
-    get(state: string | null, county: string | null, leadType: string | null, leadLevel: LeadLevel): Promise<LeadStatsDto[]>;
+    get(state: string | null, county: string | null, productType: string | null, leadType: LeadType): Promise<LeadStatsDto[]>;
 }
 
 export class AgentSearchLeadClient implements IAgentSearchLeadClient {
@@ -418,7 +417,7 @@ export class AgentSearchLeadClient implements IAgentSearchLeadClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    get(state: string | null, county: string | null, leadType: string | null, leadLevel: LeadLevel): Promise<LeadStatsDto[]> {
+    get(state: string | null, county: string | null, productType: string | null, leadType: LeadType): Promise<LeadStatsDto[]> {
         let url_ = this.baseUrl + "/api/AgentSearchLead?";
         if (state === undefined)
             throw new Error("The parameter 'state' must be defined.");
@@ -428,14 +427,14 @@ export class AgentSearchLeadClient implements IAgentSearchLeadClient {
             throw new Error("The parameter 'county' must be defined.");
         else if(county !== null)
             url_ += "County=" + encodeURIComponent("" + county) + "&";
-        if (leadType === undefined)
-            throw new Error("The parameter 'leadType' must be defined.");
-        else if(leadType !== null)
-            url_ += "LeadType=" + encodeURIComponent("" + leadType) + "&";
-        if (leadLevel === undefined || leadLevel === null)
-            throw new Error("The parameter 'leadLevel' must be defined and cannot be null.");
+        if (productType === undefined)
+            throw new Error("The parameter 'productType' must be defined.");
+        else if(productType !== null)
+            url_ += "ProductType=" + encodeURIComponent("" + productType) + "&";
+        if (leadType === undefined || leadType === null)
+            throw new Error("The parameter 'leadType' must be defined and cannot be null.");
         else
-            url_ += "LeadLevel=" + encodeURIComponent("" + leadLevel) + "&";
+            url_ += "LeadType=" + encodeURIComponent("" + leadType) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = <RequestInit>{
@@ -529,9 +528,9 @@ export interface AgentLeadDto {
     lastName: string | undefined;
     email: string | undefined;
     phone: string | undefined;
-    leadType: string | undefined;
+    productType: string | undefined;
     leadSource: string | undefined;
-    leadLevel: LeadLevel;
+    leadType: LeadType;
     address: AddressDto | undefined;
     dob: string;
     hobby: string | undefined;
@@ -540,7 +539,7 @@ export interface AgentLeadDto {
     desiredCoverageAmount: number;
 }
 
-export enum LeadLevel {
+export enum LeadType {
     A = 0,
     B = 1,
 }
@@ -566,10 +565,11 @@ export interface AgentOrderDto {
 }
 
 export interface AgentOrderLineDto {
+    id: string;
     state: string | undefined;
     county: string | undefined;
-    leadType: string | undefined;
-    leadLevel: LeadLevel;
+    productType: string | undefined;
+    leadType: LeadType;
     count: number;
     discount: number;
     price: number;
@@ -581,6 +581,14 @@ export interface ActionResultDtoOfAgentOrderLineDto {
     message: string | undefined;
     details: string | undefined;
     value: AgentOrderLineDto | undefined;
+}
+
+export interface AgentAddOrderLineDto {
+    state: string | undefined;
+    county: string | undefined;
+    productType: string | undefined;
+    leadType: LeadType;
+    count: number;
 }
 
 export interface ActionResultDtoOfAgentOrderDto {
@@ -603,9 +611,10 @@ export interface AgentProfileDto {
 export interface LeadStatsDto {
     state: string | undefined;
     county: string | undefined;
-    leadType: string | undefined;
-    leadLevel: LeadLevel;
+    productType: string | undefined;
+    leadType: LeadType;
     count: number;
+    price: number;
 }
 
 export interface WeatherForecast {

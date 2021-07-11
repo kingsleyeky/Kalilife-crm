@@ -1,3 +1,4 @@
+using System;
 using KaliLife_CRM.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,16 +25,16 @@ namespace KaliLife_CRM.Controllers
             return ret;
         }
         [HttpPost("AddItem")]
-        public ActionResultDto<AgentOrderLineDto> AddItem(AgentOrderLineDto line)
+        public ActionResultDto<AgentOrderLineDto> AddItem(AgentAddOrderLineDto line)
         {
 
-            return new ActionResultDto<AgentOrderLineDto>(line);
+            return new ActionResultDto<AgentOrderLineDto>(new AgentOrderLineDto());
         }
         [HttpDelete("DeleteItem")]
-        public AgentOrderLineDto DeleteItem(AgentOrderLineDto line)
+        public Guid DeleteItem(Guid LineId)
         {
 
-            return line;
+            return LineId;
         }
         [HttpPost("ProcessCurrentOrder")]
         public ActionResultDto<AgentOrderDto> ProcessCurrentOrder()
