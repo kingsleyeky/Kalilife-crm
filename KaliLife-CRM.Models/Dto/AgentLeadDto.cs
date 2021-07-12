@@ -11,9 +11,9 @@ namespace KaliLife_CRM.Dto
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string LeadType { get; set; }
+        public string ProductType { get; set; }
         public string LeadSource { get; set; }
-        public LeadLevel LeadLevel { get; set; }
+        public LeadType LeadType { get; set; }
         public AddressDto Address { get; set; }
         public DateTime DOB { get; set; }
         public string Hobby { get; set; }
