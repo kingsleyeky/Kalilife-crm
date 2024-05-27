@@ -72,71 +72,6 @@ export class AgentLeadsClient implements IAgentLeadsClient {
     }
 }
 
-export interface ICountyZipCodeSearchClient {
-    get(query: string | null, countyCode: string | null, zipCode: string | null, stateCode: string | null): Promise<CountyZipCodeDto[]>;
-}
-
-export class CountyZipCodeSearchClient implements ICountyZipCodeSearchClient {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    get(query: string | null, countyCode: string | null, zipCode: string | null, stateCode: string | null): Promise<CountyZipCodeDto[]> {
-        let url_ = this.baseUrl + "/api/CountyZipCodeSearch?";
-        if (query === undefined)
-            throw new Error("The parameter 'query' must be defined.");
-        else if(query !== null)
-            url_ += "query=" + encodeURIComponent("" + query) + "&";
-        if (countyCode === undefined)
-            throw new Error("The parameter 'countyCode' must be defined.");
-        else if(countyCode !== null)
-            url_ += "countyCode=" + encodeURIComponent("" + countyCode) + "&";
-        if (zipCode === undefined)
-            throw new Error("The parameter 'zipCode' must be defined.");
-        else if(zipCode !== null)
-            url_ += "zipCode=" + encodeURIComponent("" + zipCode) + "&";
-        if (stateCode === undefined)
-            throw new Error("The parameter 'stateCode' must be defined.");
-        else if(stateCode !== null)
-            url_ += "stateCode=" + encodeURIComponent("" + stateCode) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGet(_response);
-        });
-    }
-
-    protected processGet(response: Response): Promise<CountyZipCodeDto[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        let _mappings: { source: any, target: any }[] = [];
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <CountyZipCodeDto[]>jsonParse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<CountyZipCodeDto[]>(<any>null);
-    }
-}
-
 export interface IAgentOrderClient {
     currentOrder(): Promise<AgentOrderDto>;
     addItem(line: AgentAddOrderLineDto): Promise<ActionResultDtoOfAgentOrderLineDto>;
@@ -533,6 +468,71 @@ export class AgentSearchLeadClient implements IAgentSearchLeadClient {
     }
 }
 
+export interface ICountyZipCodeSearchClient {
+    get(query: string | null, countyCode: string | null, zipCode: string | null, stateCode: string | null): Promise<CountyZipCodeDto[]>;
+}
+
+export class CountyZipCodeSearchClient implements ICountyZipCodeSearchClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : <any>window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    get(query: string | null, countyCode: string | null, zipCode: string | null, stateCode: string | null): Promise<CountyZipCodeDto[]> {
+        let url_ = this.baseUrl + "/api/CountyZipCodeSearch?";
+        if (query === undefined)
+            throw new Error("The parameter 'query' must be defined.");
+        else if(query !== null)
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
+        if (countyCode === undefined)
+            throw new Error("The parameter 'countyCode' must be defined.");
+        else if(countyCode !== null)
+            url_ += "countyCode=" + encodeURIComponent("" + countyCode) + "&";
+        if (zipCode === undefined)
+            throw new Error("The parameter 'zipCode' must be defined.");
+        else if(zipCode !== null)
+            url_ += "zipCode=" + encodeURIComponent("" + zipCode) + "&";
+        if (stateCode === undefined)
+            throw new Error("The parameter 'stateCode' must be defined.");
+        else if(stateCode !== null)
+            url_ += "stateCode=" + encodeURIComponent("" + stateCode) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGet(_response);
+        });
+    }
+
+    protected processGet(response: Response): Promise<CountyZipCodeDto[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <CountyZipCodeDto[]>jsonParse(_responseText, this.jsonParseReviver);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<CountyZipCodeDto[]>(<any>null);
+    }
+}
+
 export interface IWeatherForecastClient {
     get(): Promise<WeatherForecast[]>;
 }
@@ -623,15 +623,6 @@ export enum Gender {
     Female = 1,
 }
 
-export interface CountyZipCodeDto {
-    countyCode: string | undefined;
-    countyName: string | undefined;
-    stateCode: string | undefined;
-    zipCode: string | undefined;
-    longitude: number | undefined;
-    latitude: number | undefined;
-}
-
 export interface AgentOrderDto {
     startTime: string;
     orderState: number;
@@ -689,6 +680,15 @@ export interface LeadStatsDto {
     leadType: LeadType;
     count: number;
     price: number;
+}
+
+export interface CountyZipCodeDto {
+    countyCode: string | undefined;
+    countyName: string | undefined;
+    stateCode: string | undefined;
+    zipCode: string | undefined;
+    longitude: number | undefined;
+    latitude: number | undefined;
 }
 
 export interface WeatherForecast {
